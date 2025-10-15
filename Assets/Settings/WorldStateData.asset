@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c105bb4f9254f8681f6758565f8744, type: 3}
   m_Name: WorldStateData
   m_EditorClassIdentifier: Assembly-CSharp::WorldStateData
-  isNightTime: 0
+  isNightTime: 1
   isLocationSafe: 1
+  timer: 12.889639
