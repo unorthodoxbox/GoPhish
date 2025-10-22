@@ -5,10 +5,20 @@ public class WorldStateData : ScriptableObject
 {
     public bool isNightTime = false;
     public bool isLocationSafe = true;
-    public float timer = 10.0f;
+    public static float initialTimer = 10.0f;
+    public static int initialSpawnCount = 2;
 
+
+    public int totalSpawnCount = initialSpawnCount;
+    public float timer = initialTimer;
+
+
+    public float getInititalTimer() { 
+        return initialTimer; 
+    }
     public void changeTimeOfDay()
     {
+        resetTotalSpawnCount();
         isNightTime = !isNightTime;
     }
 
@@ -19,11 +29,21 @@ public class WorldStateData : ScriptableObject
 
     public void resetTimer()
     {
-        timer = 10.0f;
+        timer = initialTimer;
     }
-    
+
     public void changeTimer(float time)
     {
         timer += time;
+    }
+
+    public void changeTotalSpawnCount(int count)
+    {
+        totalSpawnCount += count;
+    }
+    
+    public void resetTotalSpawnCount()
+    {
+        totalSpawnCount = initialSpawnCount;
     }
 }

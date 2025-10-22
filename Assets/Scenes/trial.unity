@@ -966,6 +966,18 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 1875929114}
+    - target: {fileID: 4046917995221150426, guid: c68a137f943d544dc8ec5995efd186ff, type: 3}
+      propertyPath: fishPrefabs.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046917995221150426, guid: c68a137f943d544dc8ec5995efd186ff, type: 3}
+      propertyPath: 'fishPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 4206844702035660436, guid: 9b51d34a3f4814b9ab321d0232077299, type: 3}
+    - target: {fileID: 4046917995221150426, guid: c68a137f943d544dc8ec5995efd186ff, type: 3}
+      propertyPath: 'fishPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 4380544367887470731, guid: 7b3bc5fcf6b734dbf9c2e1bb14aacc12, type: 3}
     - target: {fileID: 7093054936081765193, guid: c68a137f943d544dc8ec5995efd186ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.38024
