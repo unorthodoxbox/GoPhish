@@ -9,6 +9,15 @@ public class DayNightController : MonoBehaviour
     //public float timer = 10.0f;
 
 
+    //when testing restart:
+    void Awake() {
+        // worldState.timer = worldState.initialTimer;
+        worldState.resetTimer();
+        worldState.resetTotalSpawnCount();
+        worldState.isNightTime = false;
+        worldState.isLocationSafe = true;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

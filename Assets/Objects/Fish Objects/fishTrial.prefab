@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6294587638136151929}
   - component: {fileID: 593937084515190816}
   - component: {fileID: 6553760868466038079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: fishTrial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishController
   worldState: {fileID: 11400000, guid: 34197990cbe6f466f808afe17b9c7a27, type: 2}
-  baseSpeed: -5
-  speed: 5
+  baseSpeed: -20
+  speed: -20
   direction: 1
 --- !u!114 &6553760868466038079
 MonoBehaviour:

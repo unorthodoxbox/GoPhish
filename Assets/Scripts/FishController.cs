@@ -9,8 +9,8 @@ public class FishController : MonoBehaviour
 
 
     Rigidbody rb;
-    public float baseSpeed = -5.0f;
-    public float speed = -5.0f;
+    public float baseSpeed = -20.0f;
+    public float speed = -20.0f;
     public float direction = 1.0f;
     private bool currentNight= false;
     private bool currentSafe = true;
