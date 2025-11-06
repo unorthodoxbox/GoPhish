@@ -25,7 +25,7 @@ public class ProgressBar : MonoBehaviour
     {
         // Smoothly interpolate the scale of the progress bar based on the progress value
         Vector3 targetScale = Vector3.Lerp(emptyScale, fullScale, progress);
-        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, (fillSpeed * 10) * Time.deltaTime);
+        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, (fillSpeed * 5) * Time.deltaTime);
     }
 
     public void IncreaseProgress(float amount)

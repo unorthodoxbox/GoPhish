@@ -9,11 +9,7 @@ public class BarController : MonoBehaviour
     private bool fishContact = false;
     public ProgressBar progressBar;
 
-    //public float baseSpeed = -10.0f;
     public float upSpeed = 10.0f;
-    //public float direction = 1.0f;
-    //private bool spacePressed= false;
-    //private bool currentSafe = true;
 
 
     private void Awake()
@@ -39,7 +35,11 @@ public class BarController : MonoBehaviour
     {
         if (fishContact)
         {
-            progressBar.IncreaseProgress(0.2f);
+            progressBar.IncreaseProgress(0.1f);
+        }
+        else
+        {
+            progressBar.DecreaseProgress(0.05f);
         }
      //
     }
