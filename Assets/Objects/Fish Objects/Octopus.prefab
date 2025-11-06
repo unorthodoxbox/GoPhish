@@ -76,13 +76,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
+      propertyPath: m_TagString
+      value: Octopus
+      objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
       propertyPath: m_LocalRotation.z
@@ -90,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -105,9 +109,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 635547659545568360, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4266974578939540241}
-    - targetCorrespondingSourceObject: {fileID: 635547659545568360, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6620519819693312019}
   m_SourcePrefab: {fileID: 100100000, guid: beb06c9220f364dd9b516e0f92e84fa7, type: 3}
 --- !u!1 &4274846550958519395 stripped
 GameObject:
@@ -180,16 +181,3 @@ MonoBehaviour:
   baseSpeed: -20
   speed: -20
   direction: 1
---- !u!114 &6620519819693312019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4274846550958519395}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba6cd4ff298604a709fe0257df5e7060, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OctoController
-  worldState: {fileID: 11400000, guid: 34197990cbe6f466f808afe17b9c7a27, type: 2}

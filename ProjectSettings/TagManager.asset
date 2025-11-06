@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Octopus
   - Trial
+  - Beta
+  - Turtle
+  - Shark
+  - JellyFish
+  - Rainbow
   layers:
   - Default
   - TransparentFX

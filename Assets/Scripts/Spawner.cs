@@ -64,13 +64,16 @@ public class Spawner : MonoBehaviour
             switch (GetRandomCase())
             {
                 case 1:
-                    newFish = fishPrefabs[3]; //ultra fish
+                    newFish = GetFishPrefabByName("JellyFish");
+                    //newFish = fishPrefabs[3]; //ultra fish
                     break;
                 case 2:
-                    newFish = fishPrefabs[2]; //trash
+                    newFish = GetFishPrefabByName("Rainbow");
+                    //newFish = fishPrefabs[2]; //trash
                     break;
                 case 3:
-                    newFish = fishPrefabs[1]; //normal fish
+                    newFish = GetFishPrefabByName("Shark");
+                    //newFish = fishPrefabs[1]; //normal fish
                     break;
             }
         }
@@ -79,18 +82,21 @@ public class Spawner : MonoBehaviour
             switch (GetRandomCase())
             {
                 case 1:
-                    newFish = fishPrefabs[3]; //ultra fish
+                    newFish = GetFishPrefabByName("Beta");
+                    //newFish = fishPrefabs[3]; //ultra fish
                     break;
                 case 2:
-                    newFish = fishPrefabs[2]; //trash
+                    newFish = GetFishPrefabByName("Octopus");
+                    //newFish = fishPrefabs[2]; //trash
                     break;
                 case 3:
-                    newFish = fishPrefabs[0]; //normal fish
+                    newFish = GetFishPrefabByName("Turtle");
+                    //fishPrefabs[0]; //normal fish
                     break;
             }
             //newFish = fishPrefabs[0];
         }
-        currentFish = Instantiate(newFish, spawnPoint.position, Quaternion.identity);
+        currentFish = Instantiate(newFish, spawnPoint.position, Quaternion.identity * newFish.transform.rotation);
         currentFish.transform.position = spawnPoint.position;
     }
 
@@ -122,6 +128,18 @@ public class Spawner : MonoBehaviour
             outcome = 3; //normal fish
         }
         return outcome;
+    }
+
+    GameObject GetFishPrefabByName(string tag)
+    {
+        foreach (GameObject fish in fishPrefabs)
+        {
+            if (fish.CompareTag(tag))
+            {
+                return fish;
+            }
+        }
+        return null;
     }
 
 }

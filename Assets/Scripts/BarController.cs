@@ -6,6 +6,8 @@ public class BarController : MonoBehaviour
 
     Rigidbody rb;
     private Inputs inputs;
+    private bool fishContact = false;
+    public ProgressBar progressBar;
 
     //public float baseSpeed = -10.0f;
     public float upSpeed = 10.0f;
@@ -35,6 +37,10 @@ public class BarController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (fishContact)
+        {
+            progressBar.IncreaseProgress(0.2f);
+        }
      //
     }
 
@@ -49,6 +55,23 @@ public class BarController : MonoBehaviour
     {
         rb.velocity = new Vector3(0, 0f, 0);
         rb.AddForce(Vector3.up * upSpeed, ForceMode.Impulse);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("BouncerObject"))
+        {
+            fishContact = true;
+        }
+    }
+
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("BouncerObject"))
+        {
+            fishContact = false;
+        }
     }
 
 }

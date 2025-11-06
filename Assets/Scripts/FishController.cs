@@ -27,12 +27,15 @@ public class FishController : MonoBehaviour
      void Update()
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime);
-        rend.material.color = worldState.isNightTime ? Color.black : Color.yellow;
+        //rend.material.color = worldState.isNightTime ? Color.black : Color.yellow;
         speed = worldState.isLocationSafe ? direction * baseSpeed:  direction * baseSpeed * 2;
     }
 
     void OnCollisionEnter(Collision other) {
-        direction = direction * -1;
-        speed = speed * direction;
+        if (other.gameObject.layer == LayerMask.NameToLayer("ContainerWalls"))
+        {
+            direction = direction * -1;
+            speed = speed * direction;
+        }
     }
 }
