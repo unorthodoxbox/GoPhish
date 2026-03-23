@@ -12,24 +12,23 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
-        keyboard = Keyboard.current; // Get reference to the keyboard
+        keyboard = Keyboard.current; 
         inventory.InitializeInventory(inventorySize);
     }
 
     private void Update()
     {
-        if (keyboard == null) return; // safety
+        if (keyboard == null) return; 
 
-        // Check for tab key press
         if (keyboard.tabKey.wasPressedThisFrame)
         {
-            if (!inventory.isActiveAndEnabled)
+            if (!inventory.gameObject.activeSelf)
             {
                 inventory.Show();
             }
             else
             {
-                inventory.Hide();
+            inventory.Hide();
             }
         }
     }
