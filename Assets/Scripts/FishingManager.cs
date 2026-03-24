@@ -35,7 +35,7 @@ public class FishingManager : MonoBehaviour
         }
         else
         {
-            
+           
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Fish : MonoBehaviour
 {
     public int energy, strength, chargeRate;
-    public string type, pullState;
+    public string type, pullState, fishType;
     public float exhaustedMult, tiredMult, desperateMult;
     public void runBrain()
     {
