@@ -93,6 +93,56 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Fishing",
+            "id": "62be06de-5f92-4171-86d7-15d7bba36a9f",
+            "actions": [
+                {
+                    "name": "ChangeMode",
+                    "type": "Button",
+                    "id": "8cf10dbe-b3ba-416d-8167-e3ec78b8a490",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis",
+                    "id": "7193cb6f-33e9-4422-b8b7-14fb576ee8d4",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeMode",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "73a115e0-1129-4f95-ac48-c53f63fb7fd3",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeMode",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e93979b3-63c5-4931-ae27-c0a280d020eb",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeMode",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": [

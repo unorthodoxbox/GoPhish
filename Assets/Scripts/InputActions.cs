@@ -179,6 +179,56 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Fishing"",
+            ""id"": ""62be06de-5f92-4171-86d7-15d7bba36a9f"",
+            ""actions"": [
+                {
+                    ""name"": ""ChangeMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""8cf10dbe-b3ba-416d-8167-e3ec78b8a490"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7193cb6f-33e9-4422-b8b7-14fb576ee8d4"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeMode"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""73a115e0-1129-4f95-ac48-c53f63fb7fd3"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ChangeMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""e93979b3-63c5-4931-ae27-c0a280d020eb"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ChangeMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -248,11 +298,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        // Fishing
+        m_Fishing = asset.FindActionMap("Fishing", throwIfNotFound: true);
+        m_Fishing_ChangeMode = m_Fishing.FindAction("ChangeMode", throwIfNotFound: true);
     }
 
     ~@InputActions()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputActions.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Fishing.enabled, "This will cause a leak and performance issues, InputActions.Fishing.Disable() has not been called.");
     }
 
     /// <summary>
@@ -431,6 +485,102 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Fishing
+    private readonly InputActionMap m_Fishing;
+    private List<IFishingActions> m_FishingActionsCallbackInterfaces = new List<IFishingActions>();
+    private readonly InputAction m_Fishing_ChangeMode;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Fishing".
+    /// </summary>
+    public struct FishingActions
+    {
+        private @InputActions m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public FishingActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Fishing/ChangeMode".
+        /// </summary>
+        public InputAction @ChangeMode => m_Wrapper.m_Fishing_ChangeMode;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Fishing; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="FishingActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(FishingActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="FishingActions" />
+        public void AddCallbacks(IFishingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_FishingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FishingActionsCallbackInterfaces.Add(instance);
+            @ChangeMode.started += instance.OnChangeMode;
+            @ChangeMode.performed += instance.OnChangeMode;
+            @ChangeMode.canceled += instance.OnChangeMode;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="FishingActions" />
+        private void UnregisterCallbacks(IFishingActions instance)
+        {
+            @ChangeMode.started -= instance.OnChangeMode;
+            @ChangeMode.performed -= instance.OnChangeMode;
+            @ChangeMode.canceled -= instance.OnChangeMode;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="FishingActions.UnregisterCallbacks(IFishingActions)" />.
+        /// </summary>
+        /// <seealso cref="FishingActions.UnregisterCallbacks(IFishingActions)" />
+        public void RemoveCallbacks(IFishingActions instance)
+        {
+            if (m_Wrapper.m_FishingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="FishingActions.AddCallbacks(IFishingActions)" />
+        /// <seealso cref="FishingActions.RemoveCallbacks(IFishingActions)" />
+        /// <seealso cref="FishingActions.UnregisterCallbacks(IFishingActions)" />
+        public void SetCallbacks(IFishingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_FishingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_FishingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="FishingActions" /> instance referencing this action map.
+    /// </summary>
+    public FishingActions @Fishing => new FishingActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -517,5 +667,20 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Fishing" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="FishingActions.AddCallbacks(IFishingActions)" />
+    /// <seealso cref="FishingActions.RemoveCallbacks(IFishingActions)" />
+    public interface IFishingActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "ChangeMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChangeMode(InputAction.CallbackContext context);
     }
 }
