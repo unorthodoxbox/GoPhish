@@ -35,7 +35,17 @@ public class FishingManager : MonoBehaviour
         }
         else
         {
-           
+            calcLineStress();
+
+            checkBreak();
         }
+    }
+    public void calcLineStress()
+    {
+
+    }
+    public void checkBreak()
+    {
+
     }
 }
