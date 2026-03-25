@@ -35,7 +35,23 @@ public class FishingManager : MonoBehaviour
         }
         else
         {
+<<<<<<< HEAD
            
         }
     }
+=======
+            calcLineStress();
+
+            checkBreak();
+        }
+    }
+    public void calcLineStress()
+    {
+
+    }
+    public void checkBreak()
+    {
+
+    }
+>>>>>>> parent of c09da37 (Revert "Merge branch 'alex-code'")
 }
