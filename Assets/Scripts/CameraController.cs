@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
+    public bool inventory;
+
     public float lookSpeed, minAngle, maxAngle;
     public InputActions input;
 
@@ -34,5 +36,22 @@ public class CameraController : MonoBehaviour
 
         //apply the rotations
         transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
+    }
+    private void Update()
+    {
+        if (inventory || Time.timeScale == 0f)
+        {
+            if (input.Player.enabled)
+            {
+                input.Disable();
+            }
+        }
+        else
+        {
+            if (!input.Player.enabled)
+            {
+                input.Enable();
+            }
+        }
     }
 }
