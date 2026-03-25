@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6615260236352065082}
+  - component: {fileID: 433854806353416543}
   m_Layer: 0
   m_Name: Turtle
   m_TagString: Untagged
@@ -32,6 +33,34 @@ Transform:
   - {fileID: 1347527823418662237}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433854806353416543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831618359555559371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2d7573cade3854dadb35a2de5e7dbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fish
+  strength: 1
+  chargeRate: 5
+  fishType: 
+  pullState: 
+  exhaustedMult: 0.5
+  tiredMult: 0.75
+  desperateMult: 1.5
+  stateChangeTime: 0
+  stateChangeMin: 3
+  stateChangeMax: 5
+  curEnergy: 100
+  maxEnergy: 100
+  exhaustedEnergyLoss: 2.5
+  tiredEnergyLoss: 4
+  pullingEnergyLoss: 7
+  desperateEnergyLoss: 10
 --- !u!1 &8709402432443439822
 GameObject:
   m_ObjectHideFlags: 0

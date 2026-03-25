@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
 
     public float lookSpeed, minAngle, maxAngle;
     public InputActions input;
+    public FishingManager FM;
 
     private float xRot = 0f;
     private float yRot = 0f;
@@ -45,12 +46,29 @@ public class CameraController : MonoBehaviour
             {
                 input.Disable();
             }
+            if (Cursor.visible == false)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+        }
+        else if (FM.isFishing && input.Player.enabled)
+        {
+            if (input.Player.enabled)
+            {
+                input.Disable();
+            }
         }
         else
         {
             if (!input.Player.enabled)
             {
                 input.Enable();
+            }
+            if (Cursor.visible == true)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
             }
         }
     }

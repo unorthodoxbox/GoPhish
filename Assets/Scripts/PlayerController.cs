@@ -51,4 +51,21 @@ public class PlayerController : MonoBehaviour
             transform.position += finalMoveDir * moveSpeed * Time.fixedDeltaTime;
         }
     }
+    private void Update()
+    {
+        if (camControl.inventory || Time.timeScale == 0f || camControl.FM.isFishing)
+        {
+            if (input.Player.enabled)
+            {
+                input.Disable();
+            }
+        }
+        else
+        {
+            if (!input.Player.enabled)
+            {
+                input.Enable();
+            }
+        }
+    }
 }
