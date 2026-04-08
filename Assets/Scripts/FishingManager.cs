@@ -38,9 +38,9 @@ public class FishingManager : MonoBehaviour
         fishStateChangeTime = 0f;
         isFishing = true;
         fishDistance = castDistance;
-        player.curStance = "hold";
         fishingUI.SetActive(true);
         player.curIntegrity = player.maxIntegrity;
+        player.curPullPercent = 0.5f;
     }
 
     private void doFishing()
@@ -91,7 +91,7 @@ public class FishingManager : MonoBehaviour
     public void updateUI()
     {
         fishStateUI.text = "Fish State: " + fish.GetComponent<Fish>().pullState;
-        playerStanceUI.text = "Player Stance: " + player.curStance;
+        playerStanceUI.text = "Player Strength: " + Mathf.RoundToInt(100 * player.curPullPercent) + "%";
         fishDistanceUI.text = "Fish Distance: " + Mathf.Ceil(fishDistance);
         curIntegrityPercentUI.text = "Line Integrity: " + Mathf.RoundToInt(100 * (player.curIntegrity / player.maxIntegrity)) + "%";
         fishEnergyUI.text = "Fish Energy: " + Mathf.RoundToInt(100 * (fish.GetComponent<Fish>().curEnergy / fish.GetComponent<Fish>().maxEnergy)) + "%";

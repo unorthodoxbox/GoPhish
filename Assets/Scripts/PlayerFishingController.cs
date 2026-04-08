@@ -4,15 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerFishingController : MonoBehaviour
 {
-    public float maxFishFindTime, lineStrength, lineLength, pullStrength, maxIntegrity, curIntegrity;
-    public string curStance = "hold";
+    public float maxFishFindTime, lineStrength, lineLength, maxPullStrength, maxIntegrity, curIntegrity, curPullPercent, sensitivity;
     public bool canFish = false;
     public GameObject fishPrompt;
     public FishingManager FM;
 
     private void Update()
     {
-        stanceCheck();
+        pullCheck();
         if (canFish && Keyboard.current.eKey.wasPressedThisFrame)
         {
             fishPrompt.SetActive(false);
@@ -21,55 +20,24 @@ public class PlayerFishingController : MonoBehaviour
     }
     public float getPullStrength(float fishPull, float fishDistance)
     {
-        if (fishDistance == 0)
+        float curPullStrength = curPullPercent * maxPullStrength;
+        if (fishDistance == lineLength && curPullStrength < fishPull)
         {
-            curStance = "hold";
-            return fishPull;
+            curPullStrength = fishPull;
         }
-        switch (curStance)
-        {
-            case "freespool":
-                return 0f;
-            case "hold":
-                if (pullStrength >= fishPull)
-                {
-                    return fishPull;
-                }
-                else
-                {
-                    return pullStrength;
-                }
-            case "reel":
-                return pullStrength;
-        }
-        return 0f;
+        return curPullStrength;
     }
-    private void stanceCheck()
+    private void pullCheck()
     {
-        if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+        if (Keyboard.current.downArrowKey.isPressed)
         {
-            switch (curStance)
-            {
-                case "hold":
-                    curStance = "freespool";
-                    break;
-                case "reel":
-                    curStance = "hold";
-                    break;
-            }
+            curPullPercent -= sensitivity * Time.deltaTime;
         }
-        else if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        else if (Keyboard.current.upArrowKey.isPressed)
         {
-            switch (curStance)
-            {
-                case "freespool":
-                    curStance = "hold";
-                    break;
-                case "hold":
-                    curStance = "reel";
-                    break;
-            }
+            curPullPercent += sensitivity * Time.deltaTime;
         }
+        curPullPercent = Mathf.Clamp(curPullPercent, 0f, 1f);
     }
     private void OnTriggerEnter(Collider other)
     {
