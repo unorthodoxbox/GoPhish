@@ -48,7 +48,11 @@ public class PlayerController : MonoBehaviour
             Vector3 finalMoveDir = camForward * moveDirection.y + camRight * moveDirection.x;
 
             model.rotation = Quaternion.LookRotation(finalMoveDir);
-            transform.position += finalMoveDir * moveSpeed * Time.fixedDeltaTime;
+            GetComponent<Rigidbody>().linearVelocity = new Vector3(finalMoveDir.x * moveSpeed, GetComponent<Rigidbody>().linearVelocity.y, finalMoveDir.z * moveSpeed);
+        }
+        else
+        {
+            GetComponent<Rigidbody>().linearVelocity = new Vector3(0, GetComponent<Rigidbody>().linearVelocity.y, 0);
         }
     }
     private void Update()
