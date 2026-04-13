@@ -7,7 +7,7 @@ public class ShopController : MonoBehaviour
     [SerializeField]
     private ShopPage shopUI;
 
-    public int shopsize = 5;
+    public int shopsize = 10;
 
     private void Start()
     {
