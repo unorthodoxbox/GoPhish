@@ -4,22 +4,32 @@ using System.Collections.Generic;
 
 public class ShopPage : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     private ShopItem itemPrefab;
 
     [SerializeField]
     private RectTransform Content;
+
+    [SerializeField]
+    private NotEnoughCoins notEnoughCoinsUI;
     
     List<ShopItem> listOfUIItems = new List<ShopItem>();
 
     public void InitializeShopUI(int shopsize)
     {
-	    // Instantiate multiple item slots inside the scrollable content panel
         for (int i = 0; i < shopsize; i++)
         {
             ShopItem uiItem = Instantiate(itemPrefab, Content, false);
+            uiItem.Initialize(this);
             listOfUIItems.Add(uiItem);
+        }
+    }
+
+    public void ShowNotEnoughCoins()
+    {
+        if (notEnoughCoinsUI != null)
+        {
+            notEnoughCoinsUI.ShowMessage();
         }
     }
 

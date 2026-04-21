@@ -839,6 +839,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopWindow
       objectReference: {fileID: 0}
+    - target: {fileID: 1061052961803072705, guid: 18ff83ec315a5a140895299ea4e9e92e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2852210834020886636, guid: 18ff83ec315a5a140895299ea4e9e92e, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
