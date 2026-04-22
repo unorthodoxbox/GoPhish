@@ -9,6 +9,7 @@ public class InventoryController : MonoBehaviour
     public int inventorySize = 30;
 
     private Keyboard keyboard;
+    public CameraController camControl;
 
     private void Start()
     {
@@ -25,10 +26,12 @@ public class InventoryController : MonoBehaviour
             if (!inventory.gameObject.activeSelf)
             {
                 inventory.Show();
+                camControl.inventory = true;
             }
             else
             {
-            inventory.Hide();
+                inventory.Hide();
+                camControl.inventory = false;
             }
         }
     }
