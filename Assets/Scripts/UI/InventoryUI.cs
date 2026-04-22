@@ -34,11 +34,22 @@ public class InventoryUI : MonoBehaviour
 
     public void Show()
     {
-        gameObject.SetActive(true);
+        if (!gameObject.activeSelf)
+        {
+            bool opened = UICursorManager.TryOpenWindow(gameObject);
+            if (opened)
+            {
+                gameObject.SetActive(true);
+            }
+        }
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+            UICursorManager.CloseWindow(gameObject);
+        }
     }
 }
