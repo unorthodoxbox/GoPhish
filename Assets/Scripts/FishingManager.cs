@@ -20,12 +20,18 @@ public class FishingManager : MonoBehaviour
     public GameObject fish, fishingUI;
     public PlayerFishingController player;
 
-    private bool hasWarnedMissingFishingBar;
-    private bool hasWarnedMissingStrengthFill;
-
     private void Awake()
     {
-        CacheFishingUIRefs();
+        if (fishDistanceBarUI == null && fishingUI != null)
+        {
+            Transform barTransform = fishingUI.transform.Find("fishDistanceBar");
+            Transform barTransform2 = fishingUI.transform.Find("strengthFill");
+            if (barTransform != null && barTransform2 != null)
+            {
+                fishDistanceBarUI = barTransform as RectTransform;
+                strengthFillUI = barTransform2 as RectTransform;
+            }
+        }
     }
 
     void Update()
@@ -39,6 +45,7 @@ public class FishingManager : MonoBehaviour
     {
         //this will change to actually take player input later
         startFishing(10);
+
     }
     public void startFishing(float castDistance)
     {
@@ -83,10 +90,10 @@ public class FishingManager : MonoBehaviour
             {
                 player.curIntegrity -= 0.5f * Time.deltaTime;
             }
-            updateUI();
+            UpdateUI();
 
-            checkCatch();
-            checkBreak();
+            CheckCatch();
+            CheckBreak();
         }
     }
     public void calcLineStress()
@@ -97,15 +104,8 @@ public class FishingManager : MonoBehaviour
         deltaFishDistance = (fishPull - playerPull) * Time.deltaTime;
         fishDistance = Mathf.Clamp(fishDistance + deltaFishDistance, 0f, player.lineLength);
     }
-    public void updateUI()
+    public void UpdateUI()
     {
-        CacheFishingUIRefs();
-
-        if (fish == null || player == null)
-        {
-            return;
-        }
-
         fishStateUI.text = "Fish State: " + fish.GetComponent<Fish>().pullState;
         playerStanceUI.text = "Player Strength: " + Mathf.RoundToInt(100 * player.curPullPercent) + "%";
         fishDistanceUI.text = "Fish Distance: " + Mathf.Ceil(fishDistance);
@@ -113,91 +113,36 @@ public class FishingManager : MonoBehaviour
         fishEnergyUI.text = "Fish Energy: " + Mathf.RoundToInt(100 * (fish.GetComponent<Fish>().curEnergy / fish.GetComponent<Fish>().maxEnergy)) + "%";
 
         //adjusts fishing bar according to how close the fish is
-        if (fishDistanceBarUI != null)
-        {
-            float distance = (20 - fishDistance) / 20;
-            fishDistanceBarUI.offsetMax = new Vector2((distance * 385) - 235, fishDistanceBarUI.offsetMax.y);
-        }
-        else if (!hasWarnedMissingFishingBar)
-        {
-            Debug.LogWarning("FishingManager could not find a fishing distance bar RectTransform on fishingUI. Text will still update.");
-            hasWarnedMissingFishingBar = true;
-        }
+        float distance = (20 - fishDistance)/20;
+        fishDistanceBarUI.offsetMax = new Vector2((distance * 385) - 235, fishDistanceBarUI.offsetMax.y);
 
         //adjusts strengthBar according to player strength
-        if (strengthFillUI != null)
-        {
-            strengthFillUI.offsetMax = new Vector2(strengthFillUI.offsetMax.x, (player.curPullPercent * 255) - 155);
-        }
-        else if (!hasWarnedMissingStrengthFill)
-        {
-            Debug.LogWarning("FishingManager could not find a strength fill RectTransform on fishingUI. Text will still update.");
-            hasWarnedMissingStrengthFill = true;
-        }
+        strengthFillUI.offsetMax = new Vector2(strengthFillUI.offsetMax.x, (player.curPullPercent * 255) - 155);
     }
-    public void checkCatch()
+    public void CheckCatch()
     {
         if (fishDistance <= 0f)
         {
-            endFishing();
+            EndFishing();
             Debug.Log("Congration, you got a fish :)");
         }
     }
-    public void checkBreak()
+    public void CheckBreak()
     {
         if (player.curIntegrity <= 0)
         {
-            breakLine();
+            BreakLine();
         }
     }
-    public void breakLine()
+    public void BreakLine()
     {
-        endFishing();
+        EndFishing();
         Debug.Log("Your line broke and the fish escaped :(");
     }
-    public void endFishing()
+    public void EndFishing()
     {
         Destroy(fish);
         isFishing = false;
         fishingUI.SetActive(false);
-    }
-
-    private void CacheFishingUIRefs()
-    {
-        if (fishingUI == null)
-        {
-            return;
-        }
-
-        if (fishDistanceBarUI == null)
-        {
-            fishDistanceBarUI = FindChildRectTransform(fishingUI.transform, "fishDistanceBar")
-                ?? FindChildRectTransform(fishingUI.transform, "fishingBar");
-        }
-
-        if (strengthFillUI == null)
-        {
-            strengthFillUI = FindChildRectTransform(fishingUI.transform, "strengthFill");
-        }
-    }
-
-    private RectTransform FindChildRectTransform(Transform root, string childName)
-    {
-        Transform child = root.Find(childName);
-        if (child != null)
-        {
-            return child as RectTransform;
-        }
-
-        for (int i = 0; i < root.childCount; i++)
-        {
-            RectTransform match = FindChildRectTransform(root.GetChild(i), childName);
-            if (match != null)
-            {
-                return match;
-            }
-        }
-
-        return null;
     }
 }
