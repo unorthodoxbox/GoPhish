@@ -23,11 +23,8 @@ public class PauseMenu : MonoBehaviour
         pauseUI.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
-<<<<<<< HEAD
 
         UICursorManager.ClosePauseWindow(gameObject);
-=======
->>>>>>> alex-code
     }
 
     void Pause()
@@ -35,11 +32,8 @@ public class PauseMenu : MonoBehaviour
         pauseUI.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
-<<<<<<< HEAD
 
         UICursorManager.OpenPauseWindow(gameObject);
-=======
->>>>>>> alex-code
     }
 
     public void QuitToMenu()
