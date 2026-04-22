@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -11,13 +12,27 @@ public class FishingManager : MonoBehaviour
 
     public bool isFishing;
     public List<GameObject> fishTypes = new List<GameObject>();
-    public float fishFindTimer;
+    public float fishFindTimer, deltaFishDistance;
     public float fishStateChangeTimer, fishStateChangeTime;
 
     public TMP_Text fishStateUI, playerStanceUI, fishDistanceUI, curIntegrityPercentUI, fishEnergyUI;
-
+    public RectTransform fishDistanceBarUI, strengthFillUI;
     public GameObject fish, fishingUI;
     public PlayerFishingController player;
+
+    private void Awake()
+    {
+        if (fishDistanceBarUI == null && fishingUI != null)
+        {
+            Transform barTransform = fishingUI.transform.Find("fishDistanceBar");
+            Transform barTransform2 = fishingUI.transform.Find("strengthFill");
+            if (barTransform != null && barTransform2 != null)
+            {
+                fishDistanceBarUI = barTransform as RectTransform;
+                strengthFillUI = barTransform2 as RectTransform;
+            }
+        }
+    }
 
     void Update()
     {
@@ -85,17 +100,28 @@ public class FishingManager : MonoBehaviour
         float fishPull = fish.GetComponent<Fish>().getPullStrength();
         float playerPull = player.getPullStrength(fishPull, fishDistance);
         curStress = playerPull + fishPull;
-        float deltaFishDistance = (fishPull - playerPull) * Time.deltaTime;
+        deltaFishDistance = (fishPull - playerPull) * Time.deltaTime;
         fishDistance = Mathf.Clamp(fishDistance + deltaFishDistance, 0f, player.lineLength);
     }
     public void updateUI()
     {
+        if (fishDistanceBarUI == null)
+        {
+            return;
+        }
+
         fishStateUI.text = "Fish State: " + fish.GetComponent<Fish>().pullState;
         playerStanceUI.text = "Player Strength: " + Mathf.RoundToInt(100 * player.curPullPercent) + "%";
         fishDistanceUI.text = "Fish Distance: " + Mathf.Ceil(fishDistance);
         curIntegrityPercentUI.text = "Line Integrity: " + Mathf.RoundToInt(100 * (player.curIntegrity / player.maxIntegrity)) + "%";
         fishEnergyUI.text = "Fish Energy: " + Mathf.RoundToInt(100 * (fish.GetComponent<Fish>().curEnergy / fish.GetComponent<Fish>().maxEnergy)) + "%";
 
+        //adjusts fishing bar according to how close the fish is
+        float distance = (20 - fishDistance)/20;
+        fishDistanceBarUI.offsetMax = new Vector2((distance * 385) - 235, fishDistanceBarUI.offsetMax.y);
+
+        //adjusts strengthBar according to player strength
+        strengthFillUI.offsetMax = new Vector2(strengthFillUI.offsetMax.x, (player.curPullPercent * 255) - 155);
     }
     public void checkCatch()
     {
